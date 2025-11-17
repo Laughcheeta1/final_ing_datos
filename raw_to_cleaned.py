@@ -1,7 +1,6 @@
 import pandas as pd
+import os
 
-input_file = "raw/07_Exportaciones_2025_Julio.xlsx"
-output_file = "cleaned/07_Exportaciones_2025_Julio.parquet"
 
 columns = [
     "NIT_EXPORTADOR",
@@ -26,6 +25,9 @@ columns = [
     "NACIONALIDAD_BANDERA"
 ]
 
-df = pd.read_excel(input_file)
-df = df[columns]
-df.to_parquet(output_file, index=False)
+for file_name in os.listdir("./raw"):
+    file_name = f"./raw/{file_name}"
+    df = pd.read_excel(file_name)
+    df = df[columns]
+    output_file = f"./cleaned/{file_name}"
+    df.to_parquet(output_file, index=False)
